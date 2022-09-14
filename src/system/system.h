@@ -1,9 +1,5 @@
 #pragma once
 
-// template<typename World>
-// class AnyWorld;
-// class World;
-
 template<typename T>
 class System {
 public:

@@ -1,17 +1,6 @@
-// #include <iostream>
-
-// #include <SDL.h>
-
 #include "world/world.h"
-#include "system/collision_system.h"
-#include "system/game_logic_system.h"
-#include "system/graphics_system.h"
-#include "system/input_system.h"
-#include "component/actor_component.h"
-#include "component/input_component.h"
-#include "component/particle_component.h"
-#include "component/rectangle_component.h"
-#include "component/shape_component.h"
+#include "system/systems.h"
+#include "component/components.h"
 
 int main() {
     auto world = World();
