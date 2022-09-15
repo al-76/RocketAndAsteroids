@@ -1,6 +1,6 @@
 #pragma once
 
-#include <set>
+#include <algorithm>
 #include <typeindex>
 #include <unordered_map>
 #include <optional>
@@ -9,16 +9,17 @@
 #include "component/component_container.h"
 #include "util/noncopyable.h"
 
+class Entity;
+
+using EntityPtr = std::unique_ptr<Entity>;
+using BaseComponentContainerPtr = std::unique_ptr<BaseComponentContainer>;
+using ComponentMap = std::unordered_map<std::type_index, BaseComponentContainerPtr>;
+
 class Entity: public NonCopyable {
 public:
-    template<typename T, typename... Args>
-    T& addComponent(Args&&... args) {
-        auto key = std::type_index(typeid(T));
-        components.emplace(key,
-            std::make_unique<ComponentContainer<T>>(T { std::forward<Args>(args)... }));
-        
-        auto item = getComponentContainer<T>(components[key].get());
-        return item->get();
+    Entity(ComponentMap&& components) {
+        std::move(components.begin(), components.end(),
+            std::inserter(this->components, this->components.begin()));
     }
 
     template<typename T>
@@ -34,12 +35,26 @@ public:
     }
 
 private:
-    using BaseComponentContainerPtr = std::unique_ptr<BaseComponentContainer>;
-
-    std::unordered_map<std::type_index, BaseComponentContainerPtr> components;
+    ComponentMap components;
 
     template<typename T>
     ComponentContainer<T>* getComponentContainer(BaseComponentContainer* baseContainer) {
         return static_cast<ComponentContainer<T>*>(baseContainer);
     }
+};
+
+class EntityBuilder: public NonCopyable {
+public:
+    EntityPtr build() {
+        return std::make_unique<Entity>(std::move(components));
+    }
+
+    template<typename T, typename... Args>
+    EntityBuilder& addComponent(Args&&... args) {
+        components[std::type_index(typeid(T))] = std::make_unique<ComponentContainer<T>>(T { std::forward<Args>(args)... });
+        return *this;
+    }
+
+private:
+    ComponentMap components;
 };

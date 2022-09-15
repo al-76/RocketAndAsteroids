@@ -22,7 +22,6 @@ public:
 
 TEST(GraphicsSystem, update) {
     // Arrange
-    auto entity = Entity();
     auto world = MockWorldGraphics();
     auto system = TGraphicsSystem<MockWorldGraphics>();
     EXPECT_CALL(world, forEachComponentRectangle(_));

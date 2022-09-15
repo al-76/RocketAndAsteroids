@@ -9,12 +9,18 @@
 #include "system/system.h"
 #include "util/noncopyable.h"
 
+class World;
+
+using SystemPtr = std::unique_ptr<System<World>>;
+
 class World: public NonCopyable {
 public:
-    template<typename T, typename... Args>
-    T& addSystem(Args&&... args) {
-        systems.push_back(std::make_unique<T>(std::forward<Args>(args)...));
-        return static_cast<T&>(*systems.back().get());
+    World(std::vector<SystemPtr>&& systems,
+          std::vector<EntityPtr>&& entities) {
+        std::move(systems.begin(), systems.end(),
+            std::back_inserter(this->systems));
+        std::move(entities.begin(), entities.end(),
+            std::back_inserter(this->entities));
     }
 
     template<typename T>
@@ -28,37 +34,36 @@ public:
         }
     }
 
-    Entity& createEntity();
-    void update(float delta);
+    void update(float delta) {
+        for(const auto& system: systems) {
+            system->update(*this, delta);
+        }
+    }
 
 private:
-    std::vector<std::unique_ptr<System<World>>> systems;
-    std::vector<std::unique_ptr<Entity>> entities;
+    std::vector<SystemPtr> systems;
+    std::vector<EntityPtr> entities;
 };
 
-// template<typename World>
-// class AnyWorld: public NonCopyable {
-// public:
-//     AnyWorld(World* world): world(world) {}
+class WorldBuilder: public NonCopyable {
+public:
+    World build() {
+        return World(std::move(systems),
+            std::move(entities));
+    }
 
-//     template<typename T, typename... Args>
-//     T& addSystem(Args&&... args) {
-//         return world.addSystem(std::forward<Args>(args)...);
-//     }
+    template<typename T, typename... Args>
+    WorldBuilder& addSystem(Args&&... args) {
+        systems.push_back(std::make_unique<T>(std::forward<Args>(args)...));
+        return *this;
+    }
 
-//     template<typename T>
-//     void forEachComponent(std::function<void(Entity&, T&)> onComponent) {
-//         world.forEachComponent(onComponent);
-//     }
+    WorldBuilder& addEntity(EntityPtr&& entity) {
+        entities.push_back(std::forward<EntityPtr>(entity));
+        return *this;
+    }
 
-//     Entity& createEntity() {
-//         return world.createEntity();
-//     }
-
-//     void update(float delta) {
-//         world.update(delta);
-//     }
-
-// private:
-//     World* world;
-// };
+protected:
+    std::vector<SystemPtr> systems;
+    std::vector<EntityPtr> entities;
+};

@@ -3,29 +3,36 @@
 #include "component/components.h"
 
 int main() {
-    auto world = World();
-
-    world.addSystem<CollisionSystem>();
-    world.addSystem<GameLogicSystem>();
-    world.addSystem<GraphicsSystem>();
-    world.addSystem<InputSystem>();
+    // world
+    auto worldBuilder = WorldBuilder();
+    worldBuilder
+    .addSystem<CollisionSystem>()
+    .addSystem<GameLogicSystem>()
+    .addSystem<GraphicsSystem>()
+    .addSystem<InputSystem>();
 
     // rocket
-    auto& entity = world.createEntity();
-    entity.addComponent<ActorComponent>();
-    entity.addComponent<InputComponent>();
-    entity.addComponent<RectangleComponent>(0.f, 0.f, 30.f, 30.f);
-    entity.addComponent<ShapeComponent>(30);
+    auto rocketBuilder = EntityBuilder();
+    rocketBuilder
+    .addComponent<ActorComponent>()
+    .addComponent<InputComponent>()
+    .addComponent<RectangleComponent>(0.f, 0.f, 30.f, 30.f)
+    .addComponent<ShapeComponent>(30);
+    worldBuilder.addEntity(rocketBuilder.build());
 
     // asteroids
     for (int i = 0; i < 30; ++i) {
-        auto& entity = world.createEntity();
-        entity.addComponent<ParticleComponent>();
-        entity.addComponent<RectangleComponent>(0.f, 0.f, 5.f, 5.f);
-        entity.addComponent<ShapeComponent>(5);
+        auto asteroidBuilder = EntityBuilder();
+        asteroidBuilder
+        .addComponent<ParticleComponent>()
+        .addComponent<RectangleComponent>(0.f, 0.f, 5.f, 5.f)
+        .addComponent<ShapeComponent>(5);
+        worldBuilder.addEntity(asteroidBuilder.build());
     }
 
-    world.update(10.f);
+    worldBuilder
+    .build()
+    .update(10.f);
 
     return 0;
 }

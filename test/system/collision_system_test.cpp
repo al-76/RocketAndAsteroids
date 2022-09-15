@@ -22,7 +22,6 @@ public:
 
 TEST(CollisionSystem, update) {
     // Arrange
-    auto entity = Entity();
     auto world = MockWorldCollision();
     auto system = TCollisionSystem<MockWorldCollision>();
     EXPECT_CALL(world, forEachComponentShape(_));

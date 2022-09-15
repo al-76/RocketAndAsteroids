@@ -35,7 +35,6 @@ public:
 
 TEST(GameLogicSystem, update) {
     // Arrange
-    auto entity = Entity();
     auto world = MockWorldLogic();
     auto system = TGameLogicSystem<MockWorldLogic>();
     EXPECT_CALL(world, forEachComponentActor(_));

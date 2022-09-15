@@ -1,7 +1,9 @@
 #pragma once
 
+#include "util/noncopyable.h"
+
 template<typename T>
-class System {
+class System: public NonCopyable {
 public:
     virtual void update(T& world, float delta) = 0;
 

@@ -26,7 +26,6 @@ add_executable(
   test/system/input_system_test.cpp
   test/entity_test.cpp
   test/world_test.cpp
-  src/world/world.cpp
 )
 
 target_link_libraries(
@@ -45,7 +44,7 @@ gtest_discover_tests(raa_test)
 # Build and link
 add_executable(raa
 src/main.cpp
-src/world/world.cpp)
+)
 
 target_link_libraries(raa ${SDL2_LIBRARIES})
 

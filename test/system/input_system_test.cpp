@@ -22,7 +22,6 @@ public:
 
 TEST(InputSystem, update) {
     // Arrange
-    auto entity = Entity();
     auto world = MockWorldInput();
     auto system = TInputSystem<MockWorldInput>();
     EXPECT_CALL(world, forEachComponentInput(_));
