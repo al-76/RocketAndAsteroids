@@ -26,4 +26,5 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         gcov: true
-        gcov_include: main.c 
+        gcov_include: main.c
+        directory: CMakeFiles/raa.dir/src/ 
