@@ -17,15 +17,21 @@ jobs:
       run: brew install lcov
 
     - name: Configure CMake
-      run: cmake -DENABLE_COVERAGE=On .
+      run: cmake .
 
     - name: Build
       run: make
 
     - name: Test
       run: ctest
-     
+
+    - name: lcov
+      run: |
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '*/_deps/*' --output-file coverage.info
+        lcov --remove coverage.info '/Applications/*' --output-file coverage.info    
+ 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
-        files: ./lcov/data/init/raa.info
+        files: coverage.info

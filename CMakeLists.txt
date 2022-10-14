@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 project(RocketAndAsteriods VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/ContribCMake")
+set(CMAKE_CXX_FLAGS "-g -O0 --coverage -fprofile-arcs -ftest-coverage")
 
 # Google test
 include(FetchContent)
@@ -15,9 +15,6 @@ FetchContent_MakeAvailable(googletest)
 
 # SDL
 #find_package(SDL2 REQUIRED)
-
-# Test coverage
-find_package(codecov)
 
 # Test
 enable_testing()
@@ -49,7 +46,7 @@ gtest_discover_tests(raa_test)
 add_executable(raa
 src/main.cpp
 )
-add_coverage(raa)
+
 #target_link_libraries(raa ${SDL2_LIBRARIES})
 
 target_include_directories(raa PRIVATE
