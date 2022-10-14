@@ -13,6 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install lcov
+      run: brew install lcov
+
     - name: Configure CMake
       run: cmake -DENABLE_COVERAGE=On .
 
@@ -24,7 +27,3 @@ jobs:
      
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
-      with:
-        gcov: true
-        gcov_include: main.c
-        directory: CMakeFiles/raa.dir/src/ 
