@@ -13,9 +13,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# SDL
-#find_package(SDL2 REQUIRED)
-
 # Test
 enable_testing()
 
@@ -47,8 +44,10 @@ add_executable(raa
 src/main.cpp
 )
 
-#target_link_libraries(raa ${SDL2_LIBRARIES})
-set_target_properties(raa PROPERTIES CXX_CLANG_TIDY clang-tidy)
+find_program(CLANG_TIDY NAMES clang-tidy)
+if (CLANG_TIDY_EXE)
+  set_target_properties(raa PROPERTIES CXX_CLANG_TIDY clang-tidy)
+endif()
 
 target_include_directories(raa PRIVATE
   ${CMAKE_SOURCE_DIR}/src
