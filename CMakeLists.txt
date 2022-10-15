@@ -45,7 +45,7 @@ src/main.cpp
 )
 
 find_program(CLANG_TIDY NAMES clang-tidy)
-if (CLANG_TIDY_EXE)
+if (CLANG_TIDY)
   set_target_properties(raa PROPERTIES CXX_CLANG_TIDY clang-tidy)
 endif()
 
