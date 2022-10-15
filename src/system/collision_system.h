@@ -5,9 +5,9 @@
 #include "component/shape_component.h"
 
 template<typename T>
-class TCollisionSystem: public System<T> {
+class TCollisionSystem final: public System<T> {
 public:
-    virtual void update(T& world, float delta) override {
+    void update(T& world, float delta) override {
         world.template forEachComponent<ShapeComponent>([](Entity& entity, ShapeComponent& component) {
         });
     }

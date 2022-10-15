@@ -16,23 +16,23 @@ int main() {
     rocketBuilder
     .addComponent<ActorComponent>()
     .addComponent<InputComponent>()
-    .addComponent<RectangleComponent>(0.f, 0.f, 30.f, 30.f)
-    .addComponent<ShapeComponent>(30);
+    .addComponent<RectangleComponent>(0.f, 0.f, 30.f, 30.f) // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+    .addComponent<ShapeComponent>(30); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
     worldBuilder.addEntity(rocketBuilder.build());
 
     // asteroids
-    for (int i = 0; i < 30; ++i) {
+    for (int i = 0; i < 30; ++i) { // NOLINT(cppcoreguidelines-avoid-magic-numbers)
         auto asteroidBuilder = EntityBuilder();
         asteroidBuilder
         .addComponent<ParticleComponent>()
-        .addComponent<RectangleComponent>(0.f, 0.f, 5.f, 5.f)
-        .addComponent<ShapeComponent>(5);
+        .addComponent<RectangleComponent>(0.f, 0.f, 5.f, 5.f) // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+        .addComponent<ShapeComponent>(5); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
         worldBuilder.addEntity(asteroidBuilder.build());
     }
 
     worldBuilder
     .build()
-    .update(10.f);
+    .update(10.f); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 
     return 0;
 }

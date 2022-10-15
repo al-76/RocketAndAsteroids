@@ -5,9 +5,9 @@
 #include "component/input_component.h"
 
 template<typename T>
-class TInputSystem: public System<T> {
+class TInputSystem final: public System<T> {
 public:
-    virtual void update(T& world, float delta) override {
+    void update(T& world, float delta) override {
         world.template forEachComponent<InputComponent>([](Entity& entity, InputComponent& component) {
         });
     }

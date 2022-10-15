@@ -5,9 +5,9 @@
 #include "component/rectangle_component.h"
 
 template<typename T>
-class TGraphicsSystem: public System<T> {
+class TGraphicsSystem final: public System<T> {
 public:
-    virtual void update(T& world, float delta) override {
+    void update(T& world, float delta) override {
         world.template forEachComponent<RectangleComponent>([](Entity& entity, RectangleComponent& component) {
         });
     }

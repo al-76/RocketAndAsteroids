@@ -2,7 +2,7 @@
 
 #include <functional>
 
-struct InputComponent {
+struct InputComponent final {
     enum Key {
         W,
         A,

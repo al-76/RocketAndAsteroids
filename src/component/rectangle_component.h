@@ -1,6 +1,6 @@
 #pragma once
 
-struct RectangleComponent {
+struct RectangleComponent final {
     float x;
     float y;
     float w;

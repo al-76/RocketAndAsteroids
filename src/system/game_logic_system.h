@@ -6,9 +6,9 @@
 #include "component/particle_component.h"
 
 template<typename T>
-class TGameLogicSystem: public System<T> {
+class TGameLogicSystem final: public System<T> {
 public:
-    virtual void update(T& world, float delta) override {
+    void update(T& world, float delta) override {
         world.template forEachComponent<ActorComponent>([](Entity& entity, ActorComponent& component) {
         });
 

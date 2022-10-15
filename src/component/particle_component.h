@@ -1,4 +1,4 @@
 #pragma once
 
-struct ParticleComponent {
+struct ParticleComponent final {
 };

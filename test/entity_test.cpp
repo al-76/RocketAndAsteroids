@@ -3,7 +3,7 @@
 
 #include "entity/entity.h"
 
-struct TestComponent { int value; };
+struct TestComponent final { int value; };
 
 TEST(Entity, getComponent) {
     // Arrange

@@ -4,7 +4,7 @@ class BaseComponentContainer {
 };
 
 template<typename T>
-class ComponentContainer: public BaseComponentContainer {
+class ComponentContainer final : public BaseComponentContainer {
 public:
     ComponentContainer(T&& component):
     component(std::forward<T>(component)) {

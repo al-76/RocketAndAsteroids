@@ -7,13 +7,12 @@
 
 #include "entity/entity.h"
 #include "system/system.h"
-#include "util/noncopyable.h"
 
 class World;
 
 using SystemPtr = std::unique_ptr<System<World>>;
 
-class World: public NonCopyable {
+class World {
 public:
     World(std::vector<SystemPtr>&& systems,
           std::vector<EntityPtr>&& entities) {
@@ -22,6 +21,13 @@ public:
         std::move(entities.begin(), entities.end(),
             std::back_inserter(this->entities));
     }
+    virtual ~World() = default;
+
+    World(World&&) = default;
+    World& operator=(World&&) = default;
+
+    World(const World&) = delete;
+    const World& operator=(const World&) = delete;
 
     template<typename T>
     void forEachComponent(std::function<void(Entity&, T&)> onComponent) {
@@ -45,12 +51,20 @@ private:
     std::vector<EntityPtr> entities;
 };
 
-class WorldBuilder: public NonCopyable {
+class WorldBuilder {
 public:
     World build() {
-        return World(std::move(systems),
-            std::move(entities));
+        return { std::move(systems), std::move(entities) };
     }
+
+    WorldBuilder() = default;
+    virtual ~WorldBuilder() = default;
+
+    WorldBuilder(WorldBuilder&&) = default;
+    WorldBuilder& operator=(WorldBuilder&&) = default;
+
+    WorldBuilder(const WorldBuilder&) = delete;
+    const WorldBuilder& operator=(const WorldBuilder&) = delete;
 
     template<typename T, typename... Args>
     WorldBuilder& addSystem(Args&&... args) {
@@ -64,6 +78,6 @@ public:
     }
 
 protected:
-    std::vector<SystemPtr> systems;
-    std::vector<EntityPtr> entities;
+    std::vector<SystemPtr> systems; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes)
+    std::vector<EntityPtr> entities; // NOLINT(cppcoreguidelines-non-private-member-variables-in-classes)
 };

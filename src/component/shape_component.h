@@ -1,6 +1,6 @@
 #pragma once
 
-struct ShapeComponent {
+struct ShapeComponent final {
 public:
     int radius;
 };
