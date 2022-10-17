@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "component/rectangle_component.h"
-#include "system/graphics_system.h"
-#include "world/world.h"
+#include "sprite_component.h"
+#include "graphics_system.h"
+#include "world.h"
 
 using ::testing::_;
 
@@ -12,11 +12,11 @@ public:
     template<typename T>
     using OnComponent = std::function<void(Entity&, T&)>;
 
-    MOCK_METHOD(void, forEachComponentRectangle, (OnComponent<RectangleComponent> onComponent));
+    MOCK_METHOD(void, forEachSpriteComponent, (OnComponent<SpriteComponent> onComponent));
 
     template<typename T>
     void forEachComponent(OnComponent<T> onComponent) {
-        forEachComponentRectangle(onComponent);
+        forEachSpriteComponent(onComponent);
     }
 };
 
@@ -24,7 +24,7 @@ TEST(GraphicsSystem, update) {
     // Arrange
     auto world = MockWorldGraphics();
     auto system = TGraphicsSystem<MockWorldGraphics>();
-    EXPECT_CALL(world, forEachComponentRectangle(_));
+    EXPECT_CALL(world, forEachSpriteComponent(_));
 
     // Act
     system.update(world, 10.f);

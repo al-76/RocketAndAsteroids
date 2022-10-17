@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "component/shape_component.h"
-#include "system/collision_system.h"
-#include "world/world.h"
+#include "shape_component.h"
+#include "collision_system.h"
+#include "world.h"
 
 using ::testing::_;
 

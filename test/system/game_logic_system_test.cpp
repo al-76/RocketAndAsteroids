@@ -2,10 +2,10 @@
 #include <gmock/gmock.h>
 #include <type_traits>
 
-#include "component/actor_component.h"
-#include "component/particle_component.h"
-#include "system/game_logic_system.h"
-#include "world/world.h"
+#include "actor_component.h"
+#include "particle_component.h"
+#include "game_logic_system.h"
+#include "world.h"
 
 using ::testing::_;
 

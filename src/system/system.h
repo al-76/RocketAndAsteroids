@@ -12,5 +12,6 @@ public:
     System(const System&) = delete;
     const System& operator=(const System&) = delete;
 
+    virtual void load(T& world) {}
     virtual void update(T& world, float delta) = 0;
 };

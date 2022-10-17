@@ -1,6 +1,6 @@
-#include "world/world.h"
-#include "system/systems.h"
-#include "component/components.h"
+#include "world.h"
+#include "systems.h"
+#include "components.h"
 
 int main() {
     // world
@@ -16,7 +16,7 @@ int main() {
     rocketBuilder
     .addComponent<ActorComponent>()
     .addComponent<InputComponent>()
-    .addComponent<RectangleComponent>(0.f, 0.f, 30.f, 30.f) // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+    .addComponent<SpriteComponent>("res/ship.png") // NOLINT(cppcoreguidelines-avoid-magic-numbers)
     .addComponent<ShapeComponent>(30); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
     worldBuilder.addEntity(rocketBuilder.build());
 
@@ -25,7 +25,7 @@ int main() {
         auto asteroidBuilder = EntityBuilder();
         asteroidBuilder
         .addComponent<ParticleComponent>()
-        .addComponent<RectangleComponent>(0.f, 0.f, 5.f, 5.f) // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+        .addComponent<SpriteComponent>("res/asteroid.png") // NOLINT(cppcoreguidelines-avoid-magic-numbers)
         .addComponent<ShapeComponent>(5); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
         worldBuilder.addEntity(asteroidBuilder.build());
     }

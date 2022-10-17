@@ -1,8 +1,8 @@
 #pragma once
 
 #include "system.h"
-#include "world/world.h"
-#include "component/shape_component.h"
+#include "world.h"
+#include "shape_component.h"
 
 template<typename T>
 class TCollisionSystem final: public System<T> {

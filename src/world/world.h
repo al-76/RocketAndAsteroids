@@ -5,8 +5,8 @@
 #include <functional>
 #include <stdexcept>
 
-#include "entity/entity.h"
-#include "system/system.h"
+#include "entity.h"
+#include "system.h"
 
 class World;
 
@@ -20,6 +20,10 @@ public:
             std::back_inserter(this->systems));
         std::move(entities.begin(), entities.end(),
             std::back_inserter(this->entities));
+
+        for (const auto& system: this->systems) {
+            system->load(*this);
+        }
     }
     virtual ~World() = default;
 

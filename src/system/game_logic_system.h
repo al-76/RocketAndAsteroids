@@ -1,9 +1,9 @@
 #pragma once
 
 #include "system.h"
-#include "world/world.h"
-#include "component/actor_component.h"
-#include "component/particle_component.h"
+#include "world.h"
+#include "actor_component.h"
+#include "particle_component.h"
 
 template<typename T>
 class TGameLogicSystem final: public System<T> {

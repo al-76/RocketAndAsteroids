@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "entity/entity.h"
+#include "entity.h"
 
 struct TestComponent final { int value; };
 

@@ -1,14 +1,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "system/system.h"
-#include "world/world.h"
+#include "system.h"
+#include "world.h"
 
 using ::testing::Ref;
 using ::testing::_;
 
 class MockSystem: public System<World> {
 public:
+    MOCK_METHOD(void, load, (World& world), (override));
     MOCK_METHOD(void, update, (World& world, float delta), (override));
 };
 
@@ -21,6 +22,18 @@ public:
 
 struct TestComponent { int value; };
 
+TEST(World, load) {
+    // Arrange
+    auto worldBuilder = MockWorldBuilder();
+    worldBuilder.addSystem<MockSystem>();
+    EXPECT_CALL(worldBuilder.lastSystem(), load(_));
+
+    // Act
+    auto world = worldBuilder.build();
+
+    // Assert
+}
+
 TEST(World, update) {
     // Arrange
     auto worldBuilder = MockWorldBuilder();
@@ -30,6 +43,8 @@ TEST(World, update) {
 
     // Act
     world.update(10.f);
+
+    // Assert
 }
 
 TEST(World, forEachComponent) {

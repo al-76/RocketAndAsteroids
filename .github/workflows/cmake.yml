@@ -16,6 +16,9 @@ jobs:
     - name: Install lcov
       run: brew install lcov
 
+    - name: Install sfml
+      run: brew install sfml
+
     - name: Configure CMake
       run: cmake .
 

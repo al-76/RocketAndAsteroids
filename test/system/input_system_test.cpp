@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "component/input_component.h"
-#include "system/input_system.h"
-#include "world/world.h"
+#include "input_component.h"
+#include "input_system.h"
+#include "world.h"
 
 using ::testing::_;
 

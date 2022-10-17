@@ -1,8 +1,8 @@
 #pragma once
 
 #include "system.h"
-#include "world/world.h"
-#include "component/input_component.h"
+#include "world.h"
+#include "input_component.h"
 
 template<typename T>
 class TInputSystem final: public System<T> {

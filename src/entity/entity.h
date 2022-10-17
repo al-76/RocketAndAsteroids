@@ -6,7 +6,7 @@
 #include <optional>
 #include <memory>
 
-#include "component/component_container.h"
+#include "component_container.h"
 
 class Entity;
 
@@ -66,7 +66,7 @@ public:
 
     template<typename T, typename... Args>
     EntityBuilder& addComponent(Args&&... args) {
-        components[std::type_index(typeid(T))] = std::make_unique<ComponentContainer<T>>(T { std::forward<Args>(args)... });
+        components[std::type_index(typeid(T))] = std::make_unique<ComponentContainer<T>>(T { std::forward<Args>(args)... }); // NOLINT(cppcoreguidelines-pro-bounds-array-to-pointer-decay)
         return *this;
     }
 
