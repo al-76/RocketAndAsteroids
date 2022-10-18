@@ -1,6 +1,4 @@
-#include "world.h"
-#include "systems.h"
-#include "components.h"
+#include "ecs.h"
 
 int main() {
     // world
