@@ -15,7 +15,8 @@ int main() {
     .addComponent<ActorComponent>()
     .addComponent<InputComponent>()
     .addComponent<SpriteComponent>("res/ship.png") // NOLINT(cppcoreguidelines-avoid-magic-numbers)
-    .addComponent<ShapeComponent>(30); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+    .addComponent<ShapeComponent>(30) // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+    .addComponent<PositionComponent>(10.f, 10.f); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
     worldBuilder.addEntity(rocketBuilder.build());
 
     // asteroids
@@ -24,7 +25,8 @@ int main() {
         asteroidBuilder
         .addComponent<ParticleComponent>()
         .addComponent<SpriteComponent>("res/asteroid.png") // NOLINT(cppcoreguidelines-avoid-magic-numbers)
-        .addComponent<ShapeComponent>(5); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+        .addComponent<ShapeComponent>(5) // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+        .addComponent<PositionComponent>(30.f, 30.f); // NOLINT(cppcoreguidelines-avoid-magic-numbers)
         worldBuilder.addEntity(asteroidBuilder.build());
     }
 

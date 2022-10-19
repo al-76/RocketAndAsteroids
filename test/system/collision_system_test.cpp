@@ -9,13 +9,15 @@ using ::testing::_;
 
 class MockWorldCollision {
 public:
-    template<typename T>
-    using OnComponent = std::function<void(Entity&, T&)>;
+    using OnComponentShape = World::OnComponent<ShapeComponent>;
 
-    MOCK_METHOD(void, forEachComponentShape, (OnComponent<ShapeComponent> onComponent));
+    MOCK_METHOD(void, forEachComponentShape, (OnComponentShape onComponent));
 
-    template<typename T>
-    void forEachComponent(OnComponent<T> onComponent) {
+    template<typename ...Ts>
+    void forEachComponent(World::OnComponent<Ts...> onComponent) {}
+
+    template<>
+    void forEachComponent<ShapeComponent>(OnComponentShape onComponent) {
         forEachComponentShape(onComponent);
     }
 };

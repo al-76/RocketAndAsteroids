@@ -14,6 +14,9 @@ using SystemPtr = std::unique_ptr<System<World>>;
 
 class World {
 public:
+    template<typename ...Ts>
+    using OnComponent = std::function<std::conditional_t<false, void, void(Entity&, Ts&...)>>;
+
     World(std::vector<SystemPtr>&& systems,
           std::vector<EntityPtr>&& entities) {
         std::move(systems.begin(), systems.end(),
@@ -33,13 +36,13 @@ public:
     World(const World&) = delete;
     const World& operator=(const World&) = delete;
 
-    template<typename T>
-    void forEachComponent(std::function<void(Entity&, T&)> onComponent) {
+    template<typename ...Ts>
+    void forEachComponent(OnComponent<Ts...> onComponent) {
         for (auto& entity: entities) {
             auto ptrEntity = entity.get();
-            T* component = ptrEntity->getComponent<T>();
-            if (component != nullptr) {
-                onComponent(*ptrEntity, *component);
+            bool isValid = (ptrEntity->getComponent<Ts>() && ...);
+            if (isValid) {
+                onComponent(*ptrEntity, *(ptrEntity->getComponent<Ts>())...);
             }
         }
     }

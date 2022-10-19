@@ -1,10 +1,9 @@
 #pragma once
 
-#include <iostream>
-
 #include "system.h"
 #include "world.h"
 #include "sprite_component.h"
+#include "position_component.h"
 
 template<typename T>
 class TGraphicsSystem final: public System<T> {
@@ -19,7 +18,10 @@ public:
     }
 
     void update(T& world, float delta) override {
-        world.template forEachComponent<SpriteComponent>([](Entity& entity, SpriteComponent& component) {
+        world.template forEachComponent<PositionComponent, SpriteComponent>([](Entity& entity,
+            PositionComponent& positionComponent,
+            SpriteComponent& spriteComponent) {
+            spriteComponent.sprite.setPosition(positionComponent.x, positionComponent.y);
         });
     }
 };

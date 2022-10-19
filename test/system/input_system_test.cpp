@@ -9,13 +9,15 @@ using ::testing::_;
 
 class MockWorldInput {
 public:
-    template<typename T>
-    using OnComponent = std::function<void(Entity&, T&)>;
+    using OnComponentInput = World::OnComponent<InputComponent>;
 
-    MOCK_METHOD(void, forEachComponentInput, (OnComponent<InputComponent> onComponent));
+    MOCK_METHOD(void, forEachComponentInput, (OnComponentInput onComponent));
 
-    template<typename T>
-    void forEachComponent(OnComponent<T> onComponent) {
+    template<typename ...Ts>
+    void forEachComponent(World::OnComponent<Ts...> onComponent) {}
+
+    template<>
+    void forEachComponent<InputComponent>(OnComponentInput onComponent) {
         forEachComponentInput(onComponent);
     }
 };

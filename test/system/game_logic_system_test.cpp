@@ -11,24 +11,22 @@ using ::testing::_;
 
 class MockWorldLogic {
 public:
-    template<typename T>
-    using OnComponent = std::function<void(Entity&, T&)>;
-    using OnComponentActor = OnComponent<ActorComponent>;
-    using OnComponentParticle = OnComponent<ParticleComponent>;
+    using OnComponentActor = World::OnComponent<ActorComponent>;
+    using OnComponentParticle = World::OnComponent<ParticleComponent>;
 
-    MOCK_METHOD(void, forEachComponentActor, (OnComponent<ActorComponent> onComponent));
-    MOCK_METHOD(void, forEachComponentParticle, (OnComponent<ParticleComponent> onComponent));
+    MOCK_METHOD(void, forEachComponentActor, (OnComponentActor onComponent));
+    MOCK_METHOD(void, forEachComponentParticle, (OnComponentParticle onComponent));
 
-    template<typename T>
-    void forEachComponent(OnComponent<T> onComponent) {}
+    template<typename ...Ts>
+    void forEachComponent(World::OnComponent<Ts...> onComponent) {}
 
     template<>
-    void forEachComponent(OnComponent<ActorComponent> onComponent) {
+    void forEachComponent<ActorComponent>(OnComponentActor onComponent) {
         forEachComponentActor(onComponent);
     }
 
     template<>
-    void forEachComponent(OnComponent<ParticleComponent> onComponent) {
+    void forEachComponent<ParticleComponent>(OnComponentParticle onComponent) {
         forEachComponentParticle(onComponent);
     }
 };

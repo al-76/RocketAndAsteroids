@@ -6,7 +6,7 @@ namespace sf {
     };
 
     struct Sprite {
-        void setTexture(const Texture& texture) {
-        }
+        void setTexture(const Texture& texture) {}
+        void setPosition(float x, float y) {}
     };
 };
